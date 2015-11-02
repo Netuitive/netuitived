@@ -2,7 +2,7 @@ require 'netuitive/api_emissary'
 require 'netuitive/ingest_metric'
 require 'netuitive/ingest_sample'
 require 'netuitive/ingest_element'
-require 'netuitive/ruby_config_manager'
+require 'netuitive/netuitived_config_manager'
 
 class MetricAggregator
 

@@ -80,7 +80,6 @@ class ConfigManager
 			else
 				@@debugLevel=@@error
 			end
-
 			if isDebug?
 				puts "read config file. Results: 
 				apiId: #{apiId}

@@ -1,6 +1,6 @@
 require 'net/http'
 require 'json'
-require 'netuitive/ruby_config_manager'
+require 'netuitive/netuitived_config_manager'
 class APIEmissary
 	def sendElements(elements)
 		if ConfigManager.isDebug?

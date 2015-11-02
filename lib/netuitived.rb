@@ -1,8 +1,8 @@
-require 'netuitive/netuitived_config_manager'
-require 'netuitive/scheduler'
-require 'drb/drb'
-require 'netuitive/netuitived_server'
 fork do
+	require 'netuitive/netuitived_config_manager'
+	require 'netuitive/scheduler'
+	require 'drb/drb'
+	require 'netuitive/netuitived_server'
 	ConfigManager::setup
 	Scheduler::startSchedule
 	URI="druby://#{ConfigManager.netuitivedAddr}:#{ConfigManager.netuitivedPort}"
