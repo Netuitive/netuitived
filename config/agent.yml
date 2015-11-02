@@ -1,0 +1,8 @@
+apiId: "efb4c6a30e89662bd6fa621f0a471c06" #apiId for the datasources. found in the datasources section in the netuitive ui
+baseAddr: "api.uat.netuitive.com" #where to send the data. in most cases use the default
+port: nil #in most cases this will be nil
+elementName: "netuitived test" #name of the element to assign metrics to in netuitive. if unsure, just use the name of your app
+debugLevel: "debug" #options (in ascending order of debugness) are: error, info, debug
+netuitivedAddr: "localhost"
+netuitivedPort: 8787
+interval: 60
