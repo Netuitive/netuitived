@@ -15,6 +15,7 @@ class MetricAggregator
 	end
 
 	def sendMetrics()
+		elementString=nil
 		@metricMutex.synchronize{
 			if ConfigManager.isDebug?
 				puts "self: #{self.object_id}" 
@@ -38,9 +39,10 @@ class MetricAggregator
 			end
 			element=IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "custom", nil, @metrics, @samples+aggregatedSamplesArray, nil, nil)
 			elements= [element]
-			@apiEmissary.sendElements(elements)
+			elementString=elements.to_json
 			clearMetrics
 		}
+		@apiEmissary.sendElements(elementString)
 	end
 
 	def addSample(metricId, val)

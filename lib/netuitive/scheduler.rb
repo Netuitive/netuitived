@@ -5,7 +5,9 @@ class Scheduler
 		Thread.new do
   			while true do
   				sleep(ConfigManager.interval)
-    			FRONT_OBJECT.sendMetrics
+  				Thread.new do
+    				FRONT_OBJECT.sendMetrics
+    			end
   			end
 		end
 	end
