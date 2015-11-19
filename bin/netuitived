@@ -1,11 +1,35 @@
 #!/usr/bin/env ruby
+require 'yaml'
+gem_root= File.expand_path("../..", __FILE__)
+data=YAML.load_file "#{gem_root}/config/agent.yml"
 if ARGV[0] == "start"
+	written = false
+	elementName=ENV["NETUITIVED_ELEMENT_NAME"]
+	if(elementName == nil or elementName == "")
+		elementName = data["elementName"]
+		if(elementName == "elementName" or elementName == "")
+			puts "please enter an element name: "
+			elementName = STDIN.gets.chomp
+			data["elementName"] = elementName
+			written = true
+		end
+	end
+	apiId=ENV["NETUITIVED_API_ID"]
+	if(apiId == nil or apiId == "")
+		apiId = data["apiId"]
+		if(apiId == "apiId" or apiId == "")
+			puts "please enter an api key: "
+			apiId = STDIN.gets.chomp
+			data["apiId"] = apiId
+			written = true
+		end
+	end
+	if written
+		File.open("#{gem_root}/config/agent.yml", 'w') {|f| f.write data.to_yaml } 
+	end
     require 'netuitived'
 elsif ARGV[0] == "stop"
-	require 'yaml'
 	require 'drb/drb'
-	gem_root= File.expand_path("../..", __FILE__)
-	data=YAML.load_file "#{gem_root}/config/agent.yml"
 	netuitivedAddr=data["netuitivedAddr"]
 	netuitivedPort=data["netuitivedPort"]
 	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
