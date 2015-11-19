@@ -1,16 +1,13 @@
 require 'net/http'
 require 'json'
 require 'netuitive/netuitived_config_manager'
+require 'netuitive/netuitived_logger'
 class APIEmissary
 	def sendElements(elementString)
-		if ConfigManager.isDebug?
-			puts elementString
-		end
+		NetuitiveLogger.log.debug elementString
 		req = Net::HTTP::Post.new("/ingest/#{ConfigManager.apiId}", initheader = {'Content-Type' =>'application/json'})
 		req.body = elementString
-		if ConfigManager.isDebug?
-			puts  "starting post"
-		end
+		NetuitiveLogger.log.debug "starting post"
 		if ConfigManager.port =~ /(.*)nil(.*)/
 			port = nil
 		else
@@ -21,11 +18,14 @@ class APIEmissary
 			http.ssl_version = :SSLv3
 			http.request req
 		end
-		if ConfigManager.isDebug?
-			puts  "post finished"
-		end
-		if (response.code != "202" and ConfigManager.isError?) or (ConfigManager.isInfo?)
-			puts "Response from submitting netuitive metrics to api
+		NetuitiveLogger.log.debug "post finished"
+		if (response.code != "202")
+			NetuitiveLogger.log.error "Response from submitting netuitive metrics to api
+			code: #{response.code}
+			message: #{response.message}
+			body: #{response.body}"
+		else
+			NetuitiveLogger.log.info "Response from submitting netuitive metrics to api
 			code: #{response.code}
 			message: #{response.message}
 			body: #{response.body}"

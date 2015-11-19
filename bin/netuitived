@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+if ARGV[0] == "start"
+    require 'netuitived'
+elsif ARGV[0] == "stop"
+	require 'yaml'
+	require 'drb/drb'
+	gem_root= File.expand_path("../..", __FILE__)
+	data=YAML.load_file "#{gem_root}/config/agent.yml"
+	netuitivedAddr=data["netuitivedAddr"]
+	netuitivedPort=data["netuitivedPort"]
+	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
+	DRb.start_service
+	DRbObject.new_with_uri(SERVER_URI).stopServer
+else
+    puts "invalid option. options are: start, stop"
+end

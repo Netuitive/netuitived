@@ -1,5 +1,5 @@
 require 'netuitive/metric_aggregator'
-
+require 'netuitive/netuitived_logger'
 class NetuitivedServer
 
 	def initialize()
@@ -21,6 +21,20 @@ class NetuitivedServer
 	def clearMetrics
 		@metricAggregator.clearMetrics
 	end
+
+	def stopServer
+		Thread.new do
+    		exitProcess
+    	end
+	end
+
+	def exitProcess
+		sleep(1)
+		NetuitiveLogger.log.info "stopping netuitived"
+		Process.exit!(true)
+	end
+
+	private :exitProcess
 
 end
  

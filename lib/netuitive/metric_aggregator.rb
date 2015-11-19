@@ -3,6 +3,7 @@ require 'netuitive/ingest_metric'
 require 'netuitive/ingest_sample'
 require 'netuitive/ingest_element'
 require 'netuitive/netuitived_config_manager'
+require 'netuitive/netuitived_logger'
 
 class MetricAggregator
 
@@ -17,20 +18,16 @@ class MetricAggregator
 	def sendMetrics()
 		elementString=nil
 		@metricMutex.synchronize{
-			if ConfigManager.isDebug?
-				puts "self: #{self.object_id}" 
-				puts "Thread: #{Thread.current.object_id}"
-				puts "metrics id: #{@metrics.object_id}"
-				puts "samples id: #{@samples.object_id}"
-				puts "aggregatedSamples id: #{@aggregatedSamples.object_id}"
-				puts "metrics before send: #{@metrics.count}"
-				puts "samples before send: #{@aggregatedSamples.count + @samples.count}"
-			end
+			NetuitiveLogger.log.debug "self: #{self.object_id}" 
+			NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
+			NetuitiveLogger.log.debug "metrics id: #{@metrics.object_id}"
+			NetuitiveLogger.log.debug "samples id: #{@samples.object_id}"
+			NetuitiveLogger.log.debug "aggregatedSamples id: #{@aggregatedSamples.object_id}"
+			NetuitiveLogger.log.debug "metrics before send: #{@metrics.count}"
+			NetuitiveLogger.log.debug "samples before send: #{@aggregatedSamples.count + @samples.count}"
 
 			if @metrics.empty?
-				if ConfigManager.isInfo?
-					puts "no netuitive metrics to report"
-				end
+				NetuitiveLogger.log.info "no netuitive metrics to report"
 				return
 			end
 			aggregatedSamplesArray = @aggregatedSamples.values
@@ -47,31 +44,23 @@ class MetricAggregator
 
 	def addSample(metricId, val)
 		@metricMutex.synchronize{
-			if ConfigManager.isDebug?
-				puts "start addSample method"
-				puts "Thread: #{Thread.current.object_id}"
-				puts "self: #{self.object_id}" 
-				puts "metrics id: #{@metrics.object_id}"
-				puts "samples id: #{@samples.object_id}"
-				puts "aggregatedSamples id: #{@aggregatedSamples.object_id}"
-				puts "metrics before add: #{@metrics.count}"
-				puts "samples before add: #{@aggregatedSamples.count + @samples.count}"
-			end
+			NetuitiveLogger.log.debug "start addSample method"
+			NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
+			NetuitiveLogger.log.debug "self: #{self.object_id}" 
+			NetuitiveLogger.log.debug "metrics id: #{@metrics.object_id}"
+			NetuitiveLogger.log.debug "samples id: #{@samples.object_id}"
+			NetuitiveLogger.log.debug "aggregatedSamples id: #{@aggregatedSamples.object_id}"
+			NetuitiveLogger.log.debug "metrics before add: #{@metrics.count}"
+			NetuitiveLogger.log.debug "samples before add: #{@aggregatedSamples.count + @samples.count}"
 			if not metricExists metricId
-				if ConfigManager.isInfo?
-					puts "adding new metric: #{metricId}"
-				end
+				NetuitiveLogger.log.info "adding new metric: #{metricId}"
 				@metrics.push(IngestMetric.new(metricId, metricId, nil, "custom", nil, false))
 			end
 			@samples.push(IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil))
-			if ConfigManager.isInfo?
-				puts "netuitive sample added #{metricId} val: #{val}"
-			end
-			if ConfigManager.isDebug?
-				puts "metrics after add: #{@metrics.count}"
-				puts "samples after add: #{@aggregatedSamples.count + @samples.count}"
-				puts "end addSample method"
-			end
+			NetuitiveLogger.log.info "netuitive sample added #{metricId} val: #{val}"
+			NetuitiveLogger.log.debug "metrics after add: #{@metrics.count}"
+			NetuitiveLogger.log.debug "samples after add: #{@aggregatedSamples.count + @samples.count}"
+			NetuitiveLogger.log.debug "end addSample method"
 		}
 	end
 
@@ -86,49 +75,35 @@ class MetricAggregator
 
 	def aggregateMetric(metricId, val)
 		@metricMutex.synchronize{
-			if ConfigManager.isDebug?
-				puts "start addSample method"
-				puts "Thread: #{Thread.current.object_id}"
-				puts "self: #{self.object_id}" 
-				puts "metrics id: #{@metrics.object_id}"
-				puts "samples id: #{@samples.object_id}"
-				puts "aggregatedSamples id: #{@aggregatedSamples.object_id}"
-				puts "metrics before aggregate: #{@metrics.count}"
-				puts "samples before aggregate: #{@aggregatedSamples.count + @samples.count}"
-			end
+			NetuitiveLogger.log.debug "start addSample method"
+			NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
+			NetuitiveLogger.log.debug "self: #{self.object_id}" 
+			NetuitiveLogger.log.debug "metrics id: #{@metrics.object_id}"
+			NetuitiveLogger.log.debug "samples id: #{@samples.object_id}"
+			NetuitiveLogger.log.debug "aggregatedSamples id: #{@aggregatedSamples.object_id}"
+			NetuitiveLogger.log.debug "metrics before aggregate: #{@metrics.count}"
+			NetuitiveLogger.log.debug "samples before aggregate: #{@aggregatedSamples.count + @samples.count}"
 			if not metricExists metricId
-				if ConfigManager.isInfo?
-					puts "adding new metric: #{metricId}"
-				end
+				NetuitiveLogger.log.info "adding new metric: #{metricId}"
 				@metrics.push(IngestMetric.new(metricId, metricId, nil, "custom", nil, false))
 				@aggregatedSamples["#{metricId}"]=IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil)
 			else
 				previousVal = @aggregatedSamples["#{metricId}"].val
 				@aggregatedSamples["#{metricId}"].val+=val
-				if ConfigManager.isInfo?
-					puts "netuitive sample aggregated #{metricId} old val: #{previousVal} new val: #{@aggregatedSamples["#{metricId}"].val}"
-				end
+				NetuitiveLogger.log.info "netuitive sample aggregated #{metricId} old val: #{previousVal} new val: #{@aggregatedSamples["#{metricId}"].val}"
 			end
-			if ConfigManager.isDebug?
-				puts "metrics after aggregate: #{@metrics.count}"
-				puts "samples after aggregate: #{@aggregatedSamples.count + @samples.count}"
-				puts "end addSample method"
-			end
+			NetuitiveLogger.log.debug "metrics after aggregate: #{@metrics.count}"
+			NetuitiveLogger.log.debug "samples after aggregate: #{@aggregatedSamples.count + @samples.count}"
+			NetuitiveLogger.log.debug "end addSample method"
 		}
 	end
 
 	def clearMetrics
-		if ConfigManager.isDebug?
-			puts "start clearMetrics method"
-		end
+		NetuitiveLogger.log.debug "start clearMetrics method"
 		@metrics=Array.new
 		@samples=Array.new
 		@aggregatedSamples=Hash.new
-		if ConfigManager.isInfo?
-			puts "netuitive metrics cleared"
-		end
-		if ConfigManager.isDebug?
-			puts "end clearMetrics method"
-		end
+		NetuitiveLogger.log.info "netuitive metrics cleared"
+		NetuitiveLogger.log.debug "end clearMetrics method"
 	end
 end
