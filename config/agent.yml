@@ -1,9 +1,10 @@
-apiId: apiId #apiId for the datasources. found in the datasources section in the netuitive ui
-baseAddr: "api.app.netuitive.com" #where to send the data. in most cases use the default
-port: nil #in most cases this will be nil
-elementName: elementName #name of the element to assign metrics to in netuitive. if unsure, just use the name of your app
-debugLevel: error #options (in ascending order of debugness) are: error, info, debug
-netuitivedAddr: "localhost"
-netuitivedPort: 8875
-interval: 60
+#all are configurable using environment variables
+apiId: apiId #apiId for the datasources. found in the datasources section in the netuitive ui. environment variable: NETUITIVED_API_ID
+baseAddr: "api.app.netuitive.com" #where to send the data. in most cases use the default. environment variable: NETUITIVED_BASE_ADDR
+port: nil #in most cases this will be nil. environment variable: NETUITIVED_PORT
+elementName: elementName #name of the element to assign metrics to in netuitive. if unsure, just use the name of your app. environment variable: NETUITIVED_ELEMENT_NAME
+debugLevel: error #options (in ascending order of debugness) are: error, info, debug. environment variable: NETUITIVED_DEBUG_LEVEL
+netuitivedAddr: "localhost" #environment variable: NETUITIVED_NETUITIVED_ADDR
+netuitivedPort: 8875 #environment variable: NETUITIVED_NETUITIVED_PORT
+interval: 60 #environment variable: NETUITIVED_INTERVAL
 
