@@ -52,6 +52,14 @@ class MetricAggregator
 			NetuitiveLogger.log.debug "aggregatedSamples id: #{@aggregatedSamples.object_id}"
 			NetuitiveLogger.log.debug "metrics before add: #{@metrics.count}"
 			NetuitiveLogger.log.debug "samples before add: #{@aggregatedSamples.count + @samples.count}"
+			if metricId == nil
+				NetuitiveLogger.log.info "null metricId for addSample"
+				return false
+			end
+			if val == nil
+				NetuitiveLogger.log.info "null value for addSample for metricId #{metricId}"
+				return false
+			end
 			if not metricExists metricId
 				NetuitiveLogger.log.info "adding new metric: #{metricId}"
 				@metrics.push(IngestMetric.new(metricId, metricId, nil, "custom", nil, false))
@@ -83,11 +91,23 @@ class MetricAggregator
 			NetuitiveLogger.log.debug "aggregatedSamples id: #{@aggregatedSamples.object_id}"
 			NetuitiveLogger.log.debug "metrics before aggregate: #{@metrics.count}"
 			NetuitiveLogger.log.debug "samples before aggregate: #{@aggregatedSamples.count + @samples.count}"
+			if metricId == nil
+				NetuitiveLogger.log.info "null metricId for aggregateMetric"
+				return false
+			end
+			if val == nil
+				NetuitiveLogger.log.info "null value for aggregateMetric for metricId #{metricId}"
+				return false
+			end
 			if not metricExists metricId
 				NetuitiveLogger.log.info "adding new metric: #{metricId}"
 				@metrics.push(IngestMetric.new(metricId, metricId, nil, "custom", nil, false))
 				@aggregatedSamples["#{metricId}"]=IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil)
 			else
+				if @aggregatedSamples["#{metricId}"] == nil 
+					NetuitiveLogger.log.info "cannot aggregate metric #{metricId} that already has samples for this interval"
+					return false
+				end
 				previousVal = @aggregatedSamples["#{metricId}"].val
 				@aggregatedSamples["#{metricId}"].val+=val
 				NetuitiveLogger.log.info "netuitive sample aggregated #{metricId} old val: #{previousVal} new val: #{@aggregatedSamples["#{metricId}"].val}"

@@ -27,6 +27,17 @@ if ARGV[0] == "start"
 	if written
 		File.open("#{gem_root}/config/agent.yml", 'w') {|f| f.write data.to_yaml } 
 	end
+	require 'drb/drb'
+	netuitivedAddr=data["netuitivedAddr"]
+	netuitivedPort=data["netuitivedPort"]
+	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
+	DRb.start_service
+	begin
+		DRbObject.new_with_uri(SERVER_URI).stopServer
+		sleep(2)
+	rescue
+		
+	end
     require 'netuitived'
 elsif ARGV[0] == "stop"
 	require 'drb/drb'
@@ -34,7 +45,11 @@ elsif ARGV[0] == "stop"
 	netuitivedPort=data["netuitivedPort"]
 	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
 	DRb.start_service
-	DRbObject.new_with_uri(SERVER_URI).stopServer
+	begin
+		DRbObject.new_with_uri(SERVER_URI).stopServer
+	rescue
+		puts "netuitived isn't running"
+	end
 else
     puts "invalid option. options are: start, stop"
 end
