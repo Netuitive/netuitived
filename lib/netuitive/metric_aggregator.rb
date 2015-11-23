@@ -34,7 +34,7 @@ class MetricAggregator
 			aggregatedSamplesArray.each do |sample|
 				sample.timestamp=Time.new
 			end
-			element=IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "custom", nil, @metrics, @samples+aggregatedSamplesArray, nil, nil)
+			element=IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "Ruby", nil, @metrics, @samples+aggregatedSamplesArray, nil, nil)
 			elements= [element]
 			elementString=elements.to_json
 			clearMetrics
