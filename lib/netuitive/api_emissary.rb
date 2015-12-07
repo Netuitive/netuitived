@@ -5,7 +5,7 @@ require 'netuitive/netuitived_logger'
 class APIEmissary
 	def sendElements(elementString)
 		NetuitiveLogger.log.debug elementString
-		req = Net::HTTP::Post.new("/ingest/#{ConfigManager.apiId}", initheader = {'Content-Type' =>'application/json'})
+		req = Net::HTTP::Post.new("/ingest/ruby/#{ConfigManager.apiId}", initheader = {'Content-Type' =>'application/json'})
 		req.body = elementString
 		NetuitiveLogger.log.debug "starting post"
 		if ConfigManager.port =~ /(.*)nil(.*)/

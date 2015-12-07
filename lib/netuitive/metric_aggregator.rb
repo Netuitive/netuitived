@@ -30,6 +30,9 @@ class MetricAggregator
 				NetuitiveLogger.log.info "no netuitive metrics to report"
 				return
 			end
+		}
+			addSample("netuitive.collection_interval", ConfigManager.interval)
+		@metricMutex.synchronize{
 			aggregatedSamplesArray = @aggregatedSamples.values
 			aggregatedSamplesArray.each do |sample|
 				sample.timestamp=Time.new
