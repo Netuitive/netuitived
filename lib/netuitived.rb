@@ -5,8 +5,8 @@ fork do
 	require 'netuitive/netuitived_server'
 	ConfigManager::setup
 	Scheduler::startSchedule
-	URI="druby://#{ConfigManager.netuitivedAddr}:#{ConfigManager.netuitivedPort}"
+	NETUITIVE_URI="druby://#{ConfigManager.netuitivedAddr}:#{ConfigManager.netuitivedPort}"
 	FRONT_OBJECT=NetuitivedServer.new 
-	DRb.start_service(URI, FRONT_OBJECT)
+	DRb.start_service(NETUITIVE_URI, FRONT_OBJECT)
 	DRb.thread.join
 end

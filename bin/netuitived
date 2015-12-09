@@ -39,6 +39,7 @@ if ARGV[0] == "start"
 		
 	end
     require 'netuitived'
+    puts "netuitived started"
 elsif ARGV[0] == "stop"
 	require 'drb/drb'
 	netuitivedAddr=data["netuitivedAddr"]
@@ -47,6 +48,7 @@ elsif ARGV[0] == "stop"
 	DRb.start_service
 	begin
 		DRbObject.new_with_uri(SERVER_URI).stopServer
+		puts "netuitived stopped"
 	rescue
 		puts "netuitived isn't running"
 	end
