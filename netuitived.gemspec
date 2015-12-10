@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   files = Dir['lib/**/*.{rb}'] + Dir['lib/*.{rb}'] + Dir['config/*.{yml}'] + Dir['./LICENSE'] + Dir['log/*'] + Dir['./README.md']
   s.files       = files
   s.homepage    =
-    'http://rubygems.org/gems/netuitived'
+    'http://rubygems.org/gems/netuitived' 
   s.license       = 'Apache v2.0'
   s.required_ruby_version = '>= 1.9.0'
   s.executables << 'netuitived'
