@@ -17,6 +17,7 @@ class MetricAggregator
 
 	def sendMetrics()
 		elementString=nil
+		addSample("netuitive.collection_interval", ConfigManager.interval)
 		@metricMutex.synchronize{
 			NetuitiveLogger.log.debug "self: #{self.object_id}" 
 			NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
@@ -30,9 +31,6 @@ class MetricAggregator
 				NetuitiveLogger.log.info "no netuitive metrics to report"
 				return
 			end
-		}
-			addSample("netuitive.collection_interval", ConfigManager.interval)
-		@metricMutex.synchronize{
 			aggregatedSamplesArray = @aggregatedSamples.values
 			aggregatedSamplesArray.each do |sample|
 				sample.timestamp=Time.new
