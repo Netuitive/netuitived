@@ -1,5 +1,6 @@
 require 'netuitive/metric_aggregator'
 require 'netuitive/netuitived_logger'
+require 'netuitive/netuitived_config_manager'
 class NetuitivedServer
 
 	def initialize()
@@ -20,6 +21,10 @@ class NetuitivedServer
 
 	def clearMetrics
 		@metricAggregator.clearMetrics
+	end
+
+	def interval()
+		return ConfigManager.interval
 	end
 
 	def stopServer
