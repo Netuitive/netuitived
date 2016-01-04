@@ -15,6 +15,10 @@ class NetuitivedServer
 		@metricAggregator.addSample(metricId, val)
 	end
 
+	def addCounterSample(metricId, val)
+		@metricAggregator.addCounterSample(metricId, val)
+	end
+
 	def aggregateMetric(metricId, val)
 		@metricAggregator.aggregateMetric(metricId, val)
 	end
