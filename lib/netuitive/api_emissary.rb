@@ -19,7 +19,7 @@ class APIEmissary
 			http.request req
 		end
 		NetuitiveLogger.log.debug "post finished"
-		if (response.code != "202")
+		if (response.code != "202" or response.code != "200")
 			NetuitiveLogger.log.error "Response from submitting netuitive metrics to api
 			code: #{response.code}
 			message: #{response.message}
