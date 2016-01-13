@@ -23,6 +23,10 @@ class NetuitivedServer
 		@metricAggregator.aggregateMetric(metricId, val)
 	end
 
+	def aggregateCounterMetric(metricId, val)
+		@metricAggregator.aggregateCounterMetric(metricId, val)
+	end
+
 	def clearMetrics
 		@metricAggregator.clearMetrics
 	end

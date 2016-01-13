@@ -91,6 +91,14 @@ class MetricAggregator
 	end
 
 	def aggregateMetric(metricId, val)
+		aggregateMetricWithType(metricId, val, "GAUGE")
+	end
+
+	def aggregateCounterMetric(metricId, val)
+		aggregateMetricWithType(metricId, val, "COUNTER")
+	end
+
+	def aggregateMetricWithType(metricId, val, type)
 		@metricMutex.synchronize{
 			NetuitiveLogger.log.debug "start addSample method"
 			NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
@@ -110,7 +118,7 @@ class MetricAggregator
 			end
 			if not metricExists metricId
 				NetuitiveLogger.log.info "adding new metric: #{metricId}"
-				@metrics.push(IngestMetric.new(metricId, metricId, nil, "custom", nil, false))
+				@metrics.push(IngestMetric.new(metricId, metricId, nil, type, nil, false))
 				@aggregatedSamples["#{metricId}"]=IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil)
 			else
 				if @aggregatedSamples["#{metricId}"] == nil 

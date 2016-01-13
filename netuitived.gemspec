@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'netuitived'
-  s.version     = '0.9.12'
-  s.date        = '2015-12-30'
+  s.version     = '0.10.0'
+  s.date        = '2016-01-13'
   s.summary     = "Metric collection druby server"
   s.description = "Collects metrics over a certain interval and then sends them to Netuitive"
   s.authors     = ["John King"]
