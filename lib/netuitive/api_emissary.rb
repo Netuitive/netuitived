@@ -14,6 +14,9 @@ class APIEmissary
 			else
 				port = ConfigManager.port.to_int
 			end
+			NetuitiveLogger.log.debug "port: #{port}"
+			NetuitiveLogger.log.debug "path: #{req.path}"
+			NetuitiveLogger.log.debug "addr: #{ConfigManager.baseAddr}"
 			response = Net::HTTP.start("#{ConfigManager.baseAddr}", port, :use_ssl => true, :read_timeout => 30, :open_timeout => 30) do |http|
 				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 				http.ssl_version = :SSLv3
