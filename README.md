@@ -1,20 +1,31 @@
-# netuitived
-a druby application that allows for the submission and aggregation of metrics through the use of DRbObjects
+NetuitiveD
+===========
 
-How to install using gem:
+NetuitiveD is a dRuby application submits and aggregates metrics through the use of DRbObjects. NetuitiveD is meant to work in conjunction with the [netuitive_ruby_api](https://rubygems.org/gems/netuitive_ruby_api) and [netuitive_rails_agent](https://rubygems.org/gems/netuitive_rails_agent) gems to help [Netuitive](https://www.netuitive.com) monitor your Ruby applications.
 
-run the command:
+For more information on NetuitiveD, see our Ruby agent [help docs](https://help.netuitive.com/Content/Misc/Datasources/new_ruby_datasource.htm), or contact Netuitive support at [support@netuitive.com](mailto:support@netuitive.com).
+
+Installing and Running NetuitiveD
+---------------------------------
+
+### Install
 
      gem install netuitived
 
-How to run:
+### Run
 
-Once the gem has been installed run the start script (make sure the user it's being run as has access rights to the gem's install directory):
+1. Run the start script (make sure the user using the command has access rights to the 
+gem's install directory):
 
-	netuitived start
+	   netuitived start
 
-The start script will prompt you for the API key (which is found from generating a datasource in the Netuitive ui) and the element name (if unsure what to put, just put the name of your ruby application)
+1. The start script will prompt you for an API key and an element name. You can get an API key from creating a Ruby datasource in [Netuitive](https://app.netuitive.com/auth/login).
 
-That's it, you're up and running. The extra config information is found in config/agent.yml. Each field in the config file can also be set using environment variables. 
+        please enter an element name:
+        my_app_name
+        please enter an api key:
+        DEMOab681D46bf5616dba8337c85DEMO
+        
+    If you're unsure about what element name you should use, just use the name of your Ruby application.
 
-This daemon is meant to be used in conjunction with the netuitive_ruby_api (https://rubygems.org/gems/netuitive_ruby_api) and netuitive_rails_agent (https://rubygems.org/gems/netuitive_rails_agent) gems.
+>**Note:** The extra config information is found in config/agent.yml. Each field in the config file can also be set using environment variables. 
