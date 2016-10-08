@@ -1,0 +1,2 @@
+Metrics/LineLength:
+  Max: 160 # 80*2 - you have a widescreen monitor, right?
