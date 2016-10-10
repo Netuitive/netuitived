@@ -97,7 +97,7 @@ class Netuitived
     ##
     # Hooks up signal trapping so we cleanup gracefully if we can
     def trap_signals
-      exit_handler = Proc.new do
+      exit_handler = proc do
         stop(true)
       end
 
