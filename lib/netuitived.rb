@@ -94,17 +94,6 @@ class Netuitived
       end
     end
 
-    ##
-    # Hooks up signal trapping so we cleanup gracefully if we can
-    def trap_signals
-      exit_handler = proc do
-        stop(true)
-      end
-
-      Signal.trap('INT', &exit_handler)
-      Signal.trap('TERM', &exit_handler)
-    end
-
     private
 
     ##
