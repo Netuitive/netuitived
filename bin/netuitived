@@ -3,6 +3,9 @@ require 'drb/drb'
 require 'netuitived'
 require 'yaml'
 
+# Hook up signal traps so that we clean up if signalled
+Netuitived.trap_signals
+
 # Check command line arguments
 case ARGV[0]
 when 'run' # runs netuitived in the foreground

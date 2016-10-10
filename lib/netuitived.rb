@@ -69,6 +69,7 @@ class Netuitived
       end
 
       if foreground
+        puts 'netuitived running'
         runner.call
       else
         fork(&runner)
@@ -76,6 +77,10 @@ class Netuitived
       end
     end
 
+    ##
+    # Stops netuitived if it's running
+    #
+    # @param suppress_not_running_message [true, false] suppresses the "netuitived isn't running" message
     def stop(suppress_not_running_message = false)
       load_config
 
@@ -87,6 +92,17 @@ class Netuitived
       rescue
         puts "netuitived isn't running" unless suppress_not_running_message
       end
+    end
+
+    ##
+    # Hooks up signal trapping so we cleanup gracefully if we can
+    def trap_signals
+      exit_handler = Proc.new do
+        stop(true)
+      end
+
+      Signal.trap('INT', &exit_handler)
+      Signal.trap('TERM', &exit_handler)
     end
 
     private
