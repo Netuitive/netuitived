@@ -21,8 +21,8 @@ class EventHandler
 		@apiEmissary.sendEvents(eventString)
 	end
 
-	def handleExceptionEvent(exception, klass, uri)
-		message = "Exception: #{exception.message}\nBacktrace:\n\t#{exception.backtrace.join("\n\t")}"
+	def handleExceptionEvent(exception, klass, uri, controller, action)
+		message = "Exception Type: #{klass}\nException Message: #{exception.message}\nBacktrace:\n\t#{exception.backtrace.join("\n\t")}"
 		timestamp = Time.new
 		title = "Ruby Exception"
 		level = "Warning"
@@ -30,12 +30,16 @@ class EventHandler
 		type = "INFO"
 		tags = []
 		if uri != nil
-			uriTag = IngestTag.new("URI", uri)
-			tags << uriTag
+			tags << IngestTag.new("URI", uri)
 		end
 		if klass != nil
-			exceptionTag = IngestTag.new("Exception", klass)
-			tags << exceptionTag
+			tags << IngestTag.new("Exception", klass)
+		end
+		if controller != nil
+			tags << IngestTag.new("Controller", controller)
+		end
+		if action != nil
+			tags << IngestTag.new("Action", action)
 		end
 		handleEvent(message, timestamp, title, level, source, type, tags)
 	end
