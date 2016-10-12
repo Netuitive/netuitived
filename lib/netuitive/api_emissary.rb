@@ -8,11 +8,13 @@ class APIEmissary
     send("/ingest/ruby/#{ConfigManager.apiId}", elementString)
     NetuitiveLogger.log.debug 'finish sending elements'
   end
+
   def sendEvents(eventString)
     NetuitiveLogger.log.debug 'finish sending events'
     send("/ingest/events/ruby/#{ConfigManager.apiId}", eventString)
     NetuitiveLogger.log.debug 'finish sending events'
   end
+
   def send(uri, body)
     NetuitiveLogger.log.debug "post body: #{body}"
     req = Net::HTTP::Post.new("#{uri}", initheader = {'Content-Type' => 'application/json'})

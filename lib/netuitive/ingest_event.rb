@@ -9,6 +9,7 @@ class IngestEvent
     @tags = tags
     @data = {'elementId' => elementId, 'level' => level, 'message' => message}
   end
+
   def to_json(options = {})
     millis = @timestamp.to_f * 1000
     {'source' => @source,
