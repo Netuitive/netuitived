@@ -8,15 +8,15 @@ require 'netuitive/netuitived_logger'
 class MetricAggregator
 
   def initialize()
-    @metrics=Array.new
-    @samples=Array.new
-    @aggregatedSamples=Hash.new
-    @metricMutex=Mutex.new
-    @apiEmissary=APIEmissary.new
+    @metrics = Array.new
+    @samples = Array.new
+    @aggregatedSamples = Hash.new
+    @metricMutex = Mutex.new
+    @apiEmissary = APIEmissary.new
   end
 
   def sendMetrics()
-    elementString=nil
+    elementString = nil
     addSample("netuitive.collection_interval", ConfigManager.interval)
     @metricMutex.synchronize{
       NetuitiveLogger.log.debug "self: #{self.object_id}"
@@ -33,11 +33,11 @@ class MetricAggregator
       end
       aggregatedSamplesArray = @aggregatedSamples.values
       aggregatedSamplesArray.each do |sample|
-        sample.timestamp=Time.new
+        sample.timestamp = Time.new
       end
-      element=IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "Ruby", nil, @metrics, @samples+aggregatedSamplesArray, nil, nil)
-      elements= [element]
-      elementString=elements.to_json
+      element = IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "Ruby", nil, @metrics, @samples + aggregatedSamplesArray, nil, nil)
+      elements = [element]
+      elementString = elements.to_json
       clearMetrics
     }
     @apiEmissary.sendElements(elementString)
@@ -119,14 +119,14 @@ class MetricAggregator
       if not metricExists metricId
         NetuitiveLogger.log.info "adding new metric: #{metricId}"
         @metrics.push(IngestMetric.new(metricId, metricId, nil, type, nil, false))
-        @aggregatedSamples["#{metricId}"]=IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil)
+        @aggregatedSamples["#{metricId}"] = IngestSample.new(metricId, Time.new, val, nil, nil, nil, nil, nil)
       else
         if @aggregatedSamples["#{metricId}"] == nil
           NetuitiveLogger.log.info "cannot aggregate metric #{metricId} that already has samples for this interval"
           return false
         end
         previousVal = @aggregatedSamples["#{metricId}"].val
-        @aggregatedSamples["#{metricId}"].val+=val
+        @aggregatedSamples["#{metricId}"].val += val
         NetuitiveLogger.log.info "netuitive sample aggregated #{metricId} old val: #{previousVal} new val: #{@aggregatedSamples["#{metricId}"].val}"
       end
       NetuitiveLogger.log.debug "metrics after aggregate: #{@metrics.count}"
@@ -137,9 +137,9 @@ class MetricAggregator
 
   def clearMetrics
     NetuitiveLogger.log.debug "start clearMetrics method"
-    @metrics=Array.new
-    @samples=Array.new
-    @aggregatedSamples=Hash.new
+    @metrics = Array.new
+    @samples = Array.new
+    @aggregatedSamples = Hash.new
     NetuitiveLogger.log.info "netuitive metrics cleared"
     NetuitiveLogger.log.debug "end clearMetrics method"
   end

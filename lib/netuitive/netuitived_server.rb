@@ -37,11 +37,11 @@ class NetuitivedServer
     return ConfigManager.interval
   end
 
-  def event(message, timestamp=Time.new, title="Ruby Event", level = "Info", source = "Ruby Agent", type="INFO", tags=nil)
+  def event(message, timestamp = Time.new, title = "Ruby Event", level = "Info", source = "Ruby Agent", type = "INFO", tags = nil)
     @eventHandler.handleEvent(message, timestamp, title, level, source, type, tags)
   end
 
-  def exceptionEvent(exception, klass=nill, uri=nil, controller=nil, action=nil)
+  def exceptionEvent(exception, klass = nill, uri = nil, controller = nil, action = nil)
     @eventHandler.handleExceptionEvent(exception, klass, uri, controller, action)
   end
 
@@ -60,4 +60,3 @@ class NetuitivedServer
   private :exitProcess
 
 end
-

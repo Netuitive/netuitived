@@ -7,17 +7,17 @@ require 'netuitive/netuitived_logger'
 class EventHandler
 
   def initialize()
-    @apiEmissary=APIEmissary.new
+    @apiEmissary = APIEmissary.new
   end
 
   def handleEvent(message, timestamp, title, level, source, type, tags)
-    eventString=nil
+    eventString = nil
     NetuitiveLogger.log.debug "self: #{self.object_id}"
     NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
     NetuitiveLogger.log.debug "Received event: message:#{message}, timestamp:#{timestamp}, title:#{title}, level:#{level}, source:#{source}, type:#{type}, tags:#{tags}"
-    event=IngestEvent.new(ConfigManager.elementName, message, timestamp, title, level, source, type, tags)
-    events= [event]
-    eventString=events.to_json
+    event = IngestEvent.new(ConfigManager.elementName, message, timestamp, title, level, source, type, tags)
+    events = [event]
+    eventString = events.to_json
     @apiEmissary.sendEvents(eventString)
   end
 
