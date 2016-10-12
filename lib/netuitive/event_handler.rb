@@ -24,22 +24,22 @@ class EventHandler
   def handleExceptionEvent(exception, klass, uri, controller, action)
     message = "Exception Type: #{klass}\nException Message: #{exception.message}\nBacktrace:\n\t#{exception.backtrace.join("\n\t")}"
     timestamp = Time.new
-    title = "Ruby Exception"
-    level = "Warning"
-    source = "Ruby Agent"
-    type = "INFO"
+    title = 'Ruby Exception'
+    level = 'Warning'
+    source = 'Ruby Agent'
+    type = 'INFO'
     tags = []
     if uri != nil
-      tags << IngestTag.new("URI", uri)
+      tags << IngestTag.new('URI', uri)
     end
     if klass != nil
-      tags << IngestTag.new("Exception", klass)
+      tags << IngestTag.new('Exception', klass)
     end
     if controller != nil
-      tags << IngestTag.new("Controller", controller)
+      tags << IngestTag.new('Controller', controller)
     end
     if action != nil
-      tags << IngestTag.new("Action", action)
+      tags << IngestTag.new('Action', action)
     end
     handleEvent(message, timestamp, title, level, source, type, tags)
   end

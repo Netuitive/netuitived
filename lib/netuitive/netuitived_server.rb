@@ -37,7 +37,7 @@ class NetuitivedServer
     return ConfigManager.interval
   end
 
-  def event(message, timestamp = Time.new, title = "Ruby Event", level = "Info", source = "Ruby Agent", type = "INFO", tags = nil)
+  def event(message, timestamp = Time.new, title = 'Ruby Event', level = 'Info', source = 'Ruby Agent', type = 'INFO', tags = nil)
     @eventHandler.handleEvent(message, timestamp, title, level, source, type, tags)
   end
 
@@ -53,7 +53,7 @@ class NetuitivedServer
 
   def exitProcess
     sleep(1)
-    NetuitiveLogger.log.info "stopping netuitived"
+    NetuitiveLogger.log.info 'stopping netuitived'
     Process.exit!(true)
   end
 

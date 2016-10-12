@@ -17,7 +17,7 @@ class MetricAggregator
 
   def sendMetrics()
     elementString = nil
-    addSample("netuitive.collection_interval", ConfigManager.interval)
+    addSample('netuitive.collection_interval', ConfigManager.interval)
     @metricMutex.synchronize{
       NetuitiveLogger.log.debug "self: #{self.object_id}"
       NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
@@ -28,14 +28,14 @@ class MetricAggregator
       NetuitiveLogger.log.debug "samples before send: #{@aggregatedSamples.count + @samples.count}"
 
       if @metrics.empty?
-        NetuitiveLogger.log.info "no netuitive metrics to report"
+        NetuitiveLogger.log.info 'no netuitive metrics to report'
         return
       end
       aggregatedSamplesArray = @aggregatedSamples.values
       aggregatedSamplesArray.each do |sample|
         sample.timestamp = Time.new
       end
-      element = IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, "Ruby", nil, @metrics, @samples + aggregatedSamplesArray, nil, nil)
+      element = IngestElement.new(ConfigManager.elementName, ConfigManager.elementName, 'Ruby', nil, @metrics, @samples + aggregatedSamplesArray, nil, nil)
       elements = [element]
       elementString = elements.to_json
       clearMetrics
@@ -44,16 +44,16 @@ class MetricAggregator
   end
 
   def addSample(metricId, val)
-    addSampleWithType(metricId, val, "GAUGE")
+    addSampleWithType(metricId, val, 'GAUGE')
   end
 
   def addCounterSample(metricId, val)
-    addSampleWithType(metricId, val, "COUNTER")
+    addSampleWithType(metricId, val, 'COUNTER')
   end
 
   def addSampleWithType(metricId, val, type)
     @metricMutex.synchronize{
-      NetuitiveLogger.log.debug "start addSample method"
+      NetuitiveLogger.log.debug 'start addSample method'
       NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
       NetuitiveLogger.log.debug "self: #{self.object_id}"
       NetuitiveLogger.log.debug "metrics id: #{@metrics.object_id}"
@@ -62,7 +62,7 @@ class MetricAggregator
       NetuitiveLogger.log.debug "metrics before add: #{@metrics.count}"
       NetuitiveLogger.log.debug "samples before add: #{@aggregatedSamples.count + @samples.count}"
       if metricId == nil
-        NetuitiveLogger.log.info "null metricId for addSample"
+        NetuitiveLogger.log.info 'null metricId for addSample'
         return false
       end
       if val == nil
@@ -77,7 +77,7 @@ class MetricAggregator
       NetuitiveLogger.log.info "netuitive sample added #{metricId} val: #{val}"
       NetuitiveLogger.log.debug "metrics after add: #{@metrics.count}"
       NetuitiveLogger.log.debug "samples after add: #{@aggregatedSamples.count + @samples.count}"
-      NetuitiveLogger.log.debug "end addSample method"
+      NetuitiveLogger.log.debug 'end addSample method'
     }
   end
 
@@ -91,16 +91,16 @@ class MetricAggregator
   end
 
   def aggregateMetric(metricId, val)
-    aggregateMetricWithType(metricId, val, "GAUGE")
+    aggregateMetricWithType(metricId, val, 'GAUGE')
   end
 
   def aggregateCounterMetric(metricId, val)
-    aggregateMetricWithType(metricId, val, "COUNTER")
+    aggregateMetricWithType(metricId, val, 'COUNTER')
   end
 
   def aggregateMetricWithType(metricId, val, type)
     @metricMutex.synchronize{
-      NetuitiveLogger.log.debug "start addSample method"
+      NetuitiveLogger.log.debug 'start addSample method'
       NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
       NetuitiveLogger.log.debug "self: #{self.object_id}"
       NetuitiveLogger.log.debug "metrics id: #{@metrics.object_id}"
@@ -109,7 +109,7 @@ class MetricAggregator
       NetuitiveLogger.log.debug "metrics before aggregate: #{@metrics.count}"
       NetuitiveLogger.log.debug "samples before aggregate: #{@aggregatedSamples.count + @samples.count}"
       if metricId == nil
-        NetuitiveLogger.log.info "null metricId for aggregateMetric"
+        NetuitiveLogger.log.info 'null metricId for aggregateMetric'
         return false
       end
       if val == nil
@@ -131,16 +131,16 @@ class MetricAggregator
       end
       NetuitiveLogger.log.debug "metrics after aggregate: #{@metrics.count}"
       NetuitiveLogger.log.debug "samples after aggregate: #{@aggregatedSamples.count + @samples.count}"
-      NetuitiveLogger.log.debug "end addSample method"
+      NetuitiveLogger.log.debug 'end addSample method'
     }
   end
 
   def clearMetrics
-    NetuitiveLogger.log.debug "start clearMetrics method"
+    NetuitiveLogger.log.debug 'start clearMetrics method'
     @metrics = Array.new
     @samples = Array.new
     @aggregatedSamples = Hash.new
-    NetuitiveLogger.log.info "netuitive metrics cleared"
-    NetuitiveLogger.log.debug "end clearMetrics method"
+    NetuitiveLogger.log.info 'netuitive metrics cleared'
+    NetuitiveLogger.log.debug 'end clearMetrics method'
   end
 end
