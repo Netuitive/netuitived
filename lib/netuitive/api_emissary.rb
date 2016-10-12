@@ -17,19 +17,19 @@ class APIEmissary
 
   def send(uri, body)
     NetuitiveLogger.log.debug "post body: #{body}"
-    req = Net::HTTP::Post.new("#{uri}", initheader = {'Content-Type' => 'application/json'})
+    req = Net::HTTP::Post.new(uri.to_s, initheader = { 'Content-Type' => 'application/json' })
     req.body = body
     NetuitiveLogger.log.debug 'starting post'
     begin
-      if ConfigManager.port =~ /(.*)nil(.*)/
-        port = nil
-      else
-        port = ConfigManager.port.to_int
-      end
+      port = if ConfigManager.port =~ /(.*)nil(.*)/
+               nil
+             else
+               ConfigManager.port.to_int
+             end
       NetuitiveLogger.log.debug "port: #{port}"
       NetuitiveLogger.log.debug "path: #{req.path}"
       NetuitiveLogger.log.debug "addr: #{ConfigManager.baseAddr}"
-      response = Net::HTTP.start("#{ConfigManager.baseAddr}", port, :use_ssl => true, :read_timeout => 30, :open_timeout => 30) do |http|
+      response = Net::HTTP.start(ConfigManager.baseAddr.to_s, port, use_ssl: true, read_timeout: 30, open_timeout: 30) do |http|
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.ssl_version = :SSLv3
         http.request req
@@ -40,7 +40,7 @@ class APIEmissary
       NetuitiveLogger.log.error exception.backtrace
     end
     NetuitiveLogger.log.debug 'post finished'
-    if (response.code != '202' || response.code != '200')
+    if response.code != '202' || response.code != '200'
       NetuitiveLogger.log.error "Response from submitting netuitive metrics to api
       code: #{response.code}
       message: #{response.message}

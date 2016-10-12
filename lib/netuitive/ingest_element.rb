@@ -12,7 +12,7 @@ class IngestElement
     @attributes = attributes
   end
 
-  def to_json(options = {})
-    {'id' => @id, 'name' => @name, 'type' => @type, 'location' => @location, 'metrics' => @metrics, 'samples' => @samples,'tags' => @tags, 'attributes' => @attributes}.to_json.tr('\\"', '"')
+  def to_json(_options = {})
+    { 'id' => @id, 'name' => @name, 'type' => @type, 'location' => @location, 'metrics' => @metrics, 'samples' => @samples, 'tags' => @tags, 'attributes' => @attributes }.to_json.tr('\\"', '"')
   end
 end

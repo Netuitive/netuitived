@@ -10,7 +10,7 @@ class IngestMetric
     @aggregate = aggregate
   end
 
-  def to_json(options = {})
-    {'id' => @id,'name' => @name, 'unit' => @unit,'type' => @type, 'tags' => @tags}.to_json
+  def to_json(_options = {})
+    { 'id' => @id, 'name' => @name, 'unit' => @unit, 'type' => @type, 'tags' => @tags }.to_json
   end
 end

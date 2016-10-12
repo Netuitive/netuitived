@@ -13,14 +13,14 @@ end
 
 class NetuitiveLogger
   begin
-    @@log = Logger.new("#{File.expand_path('../../..', __FILE__)}/log/netuitive.log",'daily', 10)
+    @@log = Logger.new("#{File.expand_path('../../..', __FILE__)}/log/netuitive.log", 'daily', 10)
   rescue
     puts 'netuitive unable to open log file'
     @@log = CheaterLogger.new
   end
   class << self
     def log
-      return @@log
+      @@log
     end
   end
 end

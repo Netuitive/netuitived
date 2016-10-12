@@ -5,7 +5,7 @@ class IngestTag
     @value = value
   end
 
-  def to_json(options = {})
-    {'name' => @name, 'value' => @value}.to_json
+  def to_json(_options = {})
+    { 'name' => @name, 'value' => @value }.to_json
   end
 end

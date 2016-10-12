@@ -3,13 +3,12 @@ require 'netuitive/event_handler'
 require 'netuitive/netuitived_logger'
 require 'netuitive/netuitived_config_manager'
 class NetuitivedServer
-
-  def initialize()
+  def initialize
     @metricAggregator = MetricAggregator.new
     @eventHandler = EventHandler.new
   end
 
-  def sendMetrics()
+  def sendMetrics
     @metricAggregator.sendMetrics
   end
 
@@ -33,8 +32,8 @@ class NetuitivedServer
     @metricAggregator.clearMetrics
   end
 
-  def interval()
-    return ConfigManager.interval
+  def interval
+    ConfigManager.interval
   end
 
   def event(message, timestamp = Time.new, title = 'Ruby Event', level = 'Info', source = 'Ruby Agent', type = 'INFO', tags = nil)
@@ -58,5 +57,4 @@ class NetuitivedServer
   end
 
   private :exitProcess
-
 end

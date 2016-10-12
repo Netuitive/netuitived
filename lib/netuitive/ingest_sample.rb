@@ -12,8 +12,8 @@ class IngestSample
     @cnt = cnt
   end
 
-  def to_json(options = {})
+  def to_json(_options = {})
     millis = @timestamp.to_f * 1000
-    {'metricId' => @metricId,'timestamp' => millis.round, 'val' => @val,'min' => @min, 'max' => @max, 'avg' => @avg,'sum' => @sum, 'cnt' => @cnt}.to_json
+    { 'metricId' => @metricId, 'timestamp' => millis.round, 'val' => @val, 'min' => @min, 'max' => @max, 'avg' => @avg, 'sum' => @sum, 'cnt' => @cnt }.to_json
   end
 end
