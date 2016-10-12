@@ -17,7 +17,7 @@ class APIEmissary
 
   def send(uri, body)
     NetuitiveLogger.log.debug "post body: #{body}"
-    req = Net::HTTP::Post.new(uri.to_s, initheader = { 'Content-Type' => 'application/json' })
+    req = Net::HTTP::Post.new(uri.to_s, 'Content-Type' => 'application/json')
     req.body = body
     NetuitiveLogger.log.debug 'starting post'
     begin

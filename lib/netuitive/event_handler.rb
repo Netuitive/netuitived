@@ -10,7 +10,6 @@ class EventHandler
   end
 
   def handleEvent(message, timestamp, title, level, source, type, tags)
-    eventString = nil
     NetuitiveLogger.log.debug "self: #{object_id}"
     NetuitiveLogger.log.debug "Thread: #{Thread.current.object_id}"
     NetuitiveLogger.log.debug "Received event: message:#{message}, timestamp:#{timestamp}, title:#{title}, level:#{level}, source:#{source}, type:#{type}, tags:#{tags}"
