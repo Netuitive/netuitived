@@ -2,19 +2,18 @@ require 'yaml'
 require 'netuitive/netuitived_logger'
 class ConfigManager
   class << self
-    
     attr_reader :apiId
-    
+
     attr_reader :baseAddr
-    
+
     attr_reader :port
-    
+
     attr_reader :elementName
-    
+
     attr_reader :netuitivedAddr
-    
+
     attr_reader :netuitivedPort
-    
+
     attr_reader :interval
 
     attr_reader :data
@@ -62,7 +61,7 @@ class ConfigManager
       gem_root = File.expand_path('../../..', __FILE__)
       @data = YAML.load_file "#{gem_root}/config/agent.yml"
     end
-    
+
     def read_config
       @apiId = property('apiId', 'NETUITIVED_API_ID')
       @baseAddr = property('baseAddr', 'NETUITIVED_BASE_ADDR')
@@ -71,16 +70,16 @@ class ConfigManager
       @netuitivedAddr = property('netuitivedAddr', 'NETUITIVED_NETUITIVED_ADDR')
       @netuitivedPort = property('netuitivedPort', 'NETUITIVED_NETUITIVED_PORT')
       @interval = property('interval', 'NETUITIVED_INTERVAL')
-      debugLevelString = property('debugLevel','NETUITIVED_DEBUG_LEVEL')
-      if debugLevelString == "error"
-        NetuitiveLogger.log.level = Logger::ERROR
-      elsif debugLevelString == "info"
-        NetuitiveLogger.log.level = Logger::INFO
-      elsif debugLevelString == "debug"
-        NetuitiveLogger.log.level = Logger::DEBUG
-      else
-        NetuitiveLogger.log.level = Logger::ERROR
-      end
+      debugLevelString = property('debugLevel', 'NETUITIVED_DEBUG_LEVEL')
+      NetuitiveLogger.log.level = if debugLevelString == 'error'
+                                    Logger::ERROR
+                                  elsif debugLevelString == 'info'
+                                    Logger::INFO
+                                  elsif debugLevelString == 'debug'
+                                    Logger::DEBUG
+                                  else
+                                    Logger::ERROR
+                                  end
       NetuitiveLogger.log.debug "read config file. Results:
         apiId: #{apiId}
         baseAddr: #{baseAddr}

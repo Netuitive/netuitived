@@ -99,7 +99,7 @@ class Netuitived
     ##
     # Loads the configuration if necessary
     def load_config
-       unless @config_manager_setup
+      unless @config_manager_setup
         ConfigManager.load_config
         NetuitiveLogger.setup
         ConfigManager.read_config
