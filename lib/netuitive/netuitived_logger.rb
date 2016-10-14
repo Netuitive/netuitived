@@ -1,4 +1,5 @@
 require 'logger'
+
 class CheaterLogger
   attr_accessor :level
   def debug(message)
@@ -12,15 +13,16 @@ class CheaterLogger
 end
 
 class NetuitiveLogger
-  begin
-    @@log = Logger.new("#{File.expand_path('../../..', __FILE__)}/log/netuitive.log", 'daily', 10)
-  rescue
-    puts 'netuitive unable to open log file'
-    @@log = CheaterLogger.new
-  end
   class << self
-    def log
-      @@log
+    attr_reader :log
+    def setup
+      file = ConfigManager.property('logLocation', 'NETUITIVED_LOG_LOCATION', "#{File.expand_path('../../..', __FILE__)}/log/netuitive.log")
+      age = ConfigManager.property('logAge', 'NETUITIVED_LOG_AGE', 'daily')
+      size = ConfigManager.property('logSize', 'NETUITIVED_LOG_SIZE', nil)
+      @log = Logger.new(file, age, size)
+    rescue
+      puts 'netuitive unable to open log file'
+      @log = CheaterLogger.new
     end
   end
 end

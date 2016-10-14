@@ -99,7 +99,11 @@ class Netuitived
     ##
     # Loads the configuration if necessary
     def load_config
-      ConfigManager.setup unless @config_manager_setup
+      unless @config_manager_setup
+        ConfigManager.load_config
+        NetuitiveLogger.setup
+        ConfigManager.read_config
+      end
 
       @config_manager_setup = true
       @server_uri ||= "druby://#{ConfigManager.netuitivedAddr}:#{ConfigManager.netuitivedPort}".freeze

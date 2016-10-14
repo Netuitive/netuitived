@@ -2,67 +2,75 @@ require 'yaml'
 require 'netuitive/netuitived_logger'
 class ConfigManager
   class << self
-    def setup
-      readConfig
+    attr_reader :apiId
+
+    attr_reader :baseAddr
+
+    attr_reader :port
+
+    attr_reader :elementName
+
+    attr_reader :netuitivedAddr
+
+    attr_reader :netuitivedPort
+
+    attr_reader :interval
+
+    attr_reader :data
+
+    def property(name, var, default = nil)
+      prop = ENV[var]
+      prop = data[name] if prop.nil? || (prop == '')
+      return prop unless prop.nil? || (prop == '')
+      default
     end
 
-    def apiId
-      @@apiId
+    def boolean_property(name, var)
+      prop = ENV[var].nil? ? nil : ENV[var].dup
+      if prop.nil? || (prop == '')
+        prop = data[name]
+      else
+        prop.strip!
+        prop = prop.casecmp('true').zero?
+      end
+      prop
     end
 
-    def baseAddr
-      @@baseAddr
+    def float_property(name, var)
+      prop = ENV[var].nil? ? nil : ENV[var]
+      if prop.nil? || (prop == '')
+        data[name].to_f
+      else
+        prop.to_f
+      end
     end
 
-    def port
-      @@port
+    def string_list_property(name, var)
+      list = []
+      prop = ENV[var].nil? ? nil : ENV[var].dup
+      if prop.nil? || (prop == '')
+        list = data[name] if !data[name].nil? && data[name].is_a?(Array)
+      else
+        list = prop.split(',')
+      end
+      list.each(&:strip!) unless list.empty?
+      list
     end
 
-    def elementName
-      @@elementName
-    end
-
-    def netuitivedAddr
-      @@netuitivedAddr
-    end
-
-    def netuitivedPort
-      @@netuitivedPort
-    end
-
-    def interval
-      @@interval
-    end
-
-    def readConfig
+    def load_config
       gem_root = File.expand_path('../../..', __FILE__)
-      data = YAML.load_file "#{gem_root}/config/agent.yml"
-      @@apiId = ENV['NETUITIVED_API_ID']
-      @@apiId = data['apiId'] if @@apiId.nil? || @@apiId == ''
-      @@baseAddr = ENV['NETUITIVED_BASE_ADDR']
-      @@baseAddr = data['baseAddr'] if @@baseAddr.nil? || @@baseAddr == ''
-      @@port = ENV['NETUITIVED_PORT']
-      @@port = data['port'] if @@port.nil? || @@port == ''
-      @@elementName = ENV['NETUITIVED_ELEMENT_NAME']
-      if @@elementName.nil? || @@elementName == ''
-        @@elementName = data['elementName']
-      end
-      @@netuitivedAddr = ENV['NETUITIVED_NETUITIVED_ADDR']
-      if @@netuitivedAddr.nil? || @@netuitivedAddr == ''
-        @@netuitivedAddr = data['netuitivedAddr']
-      end
-      @@netuitivedPort = ENV['NETUITIVED_NETUITIVED_PORT']
-      if @@netuitivedPort.nil? || @@netuitivedPort == ''
-        @@netuitivedPort = data['netuitivedPort']
-      end
-      @@interval = ENV['NETUITIVED_INTERVAL']
-      @@interval = data['interval'] if @@interval.nil? || @@interval == ''
-      debugLevelString = ENV['NETUITIVED_DEBUG_LEVEL']
-      if debugLevelString.nil? || debugLevelString == ''
-        debugLevelString = data['debugLevel']
-      end
-      NetuitiveLogger.log.info "port: #{@@netuitivedPort}"
-      NetuitiveLogger.log.info "addr: #{@@netuitivedAddr}"
+      @data = YAML.load_file "#{gem_root}/config/agent.yml"
+    end
+
+    def read_config
+      @apiId = property('apiId', 'NETUITIVED_API_ID')
+      @baseAddr = property('baseAddr', 'NETUITIVED_BASE_ADDR')
+      @port = property('port', 'NETUITIVED_PORT')
+      @elementName = property('elementName', 'NETUITIVED_ELEMENT_NAME')
+      @netuitivedAddr = property('netuitivedAddr', 'NETUITIVED_NETUITIVED_ADDR')
+      @netuitivedPort = property('netuitivedPort', 'NETUITIVED_NETUITIVED_PORT')
+      @interval = property('interval', 'NETUITIVED_INTERVAL')
+      debugLevelString = property('debugLevel', 'NETUITIVED_DEBUG_LEVEL')
       NetuitiveLogger.log.level = if debugLevelString == 'error'
                                     Logger::ERROR
                                   elsif debugLevelString == 'info'
