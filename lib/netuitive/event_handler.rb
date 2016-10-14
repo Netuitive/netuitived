@@ -19,7 +19,7 @@ class EventHandler
     @apiEmissary.sendEvents(eventString)
   end
 
-  def handleExceptionEvent(exception, klass, tags={})
+  def handleExceptionEvent(exception, klass, tags = {})
     message = "Exception Message: #{exception.message}\n"
     timestamp = Time.new
     title = 'Ruby Exception'
@@ -29,7 +29,7 @@ class EventHandler
     ingest_tags = []
     tags [:Exception] = klass unless klass.nil?
     tags.each do |key, value|
-      next unless !(value.nil? || value == '')
+      next if value.nil? || value == ''
       ingest_tags << IngestTag.new(key, value)
       message += "#{key}: #{value}\n"
     end
