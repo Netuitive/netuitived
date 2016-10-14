@@ -1,4 +1,7 @@
 #all are configurable using environment variables
+logLocation: #absolute path of log file. leave blank for default location in the gem directory. environment variable: NETUITIVED_LOG_LOCATION
+logAge: daily #Number of old log files to keep, or frequency of rotation (daily, weekly or monthly). environment variable: NETUITIVED_LOG_AGE
+logSize: #Maximum logfile size (only applies when shift_age is a number). environment variable: NETUITIVED_LOG_SIZE
 apiId: apiId #apiId for the datasources. found in the datasources section in the netuitive ui. environment variable: NETUITIVED_API_ID
 baseAddr: "api.app.netuitive.com" #where to send the data. in most cases use the default. environment variable: NETUITIVED_BASE_ADDR
 port: nil #in most cases this will be nil. environment variable: NETUITIVED_PORT
