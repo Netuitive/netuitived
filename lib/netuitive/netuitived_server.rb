@@ -40,8 +40,8 @@ class NetuitivedServer
     @eventHandler.handleEvent(message, timestamp, title, level, source, type, tags)
   end
 
-  def exceptionEvent(exception, klass = nill, uri = nil, controller = nil, action = nil)
-    @eventHandler.handleExceptionEvent(exception, klass, uri, controller, action)
+  def exceptionEvent(exception, klass = nil, tags = nil)
+    @eventHandler.handleExceptionEvent(exception, klass, tags)
   end
 
   def stopServer
