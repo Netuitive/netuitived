@@ -6,6 +6,9 @@ require 'netuitive/netuitived_config_manager'
 require 'netuitive/netuitived_logger'
 
 class MetricAggregator
+  attr_reader :samples
+  attr_reader :metrics
+
   def initialize
     @metrics = []
     @samples = []

@@ -4,3 +4,4 @@ rvm:
 install: gem install rubocop haml-lint
 script:
   - rubocop
+  - rake test
