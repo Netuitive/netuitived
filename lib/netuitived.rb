@@ -2,6 +2,8 @@ require 'netuitive/netuitived_config_manager'
 require 'netuitive/scheduler'
 require 'drb/drb'
 require 'netuitive/netuitived_server'
+require 'netuitive/metric_aggregator'
+require 'netuitive/event_handler'
 
 ##
 # Provides facilities for running Netuitived
@@ -14,7 +16,12 @@ class Netuitived
     #
     # @return [NetuitivedServer] The NetuitivedServer front object
     def front_object
-      @front_object ||= NetuitivedServer.new
+      @front_object ||= new_front_object
+    end
+
+    def new_front_object
+      apiEmissary = APIEmissary.new
+      NetuitivedServer.new(MetricAggregator.new(apiEmissary), EventHandler.new(apiEmissary))
     end
 
     ##
