@@ -3,9 +3,9 @@ require 'netuitive/event_handler'
 require 'netuitive/netuitived_logger'
 require 'netuitive/netuitived_config_manager'
 class NetuitivedServer
-  def initialize
-    @metricAggregator = MetricAggregator.new
-    @eventHandler = EventHandler.new
+  def initialize(metricAggregator, eventHandler)
+    @metricAggregator = metricAggregator
+    @eventHandler = eventHandler
   end
 
   def sendMetrics

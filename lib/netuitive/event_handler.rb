@@ -5,8 +5,8 @@ require 'netuitive/netuitived_config_manager'
 require 'netuitive/netuitived_logger'
 
 class EventHandler
-  def initialize
-    @apiEmissary = APIEmissary.new
+  def initialize(apiEmissary)
+    @apiEmissary = apiEmissary
   end
 
   def handleEvent(message, timestamp, title, level, source, type, tags)

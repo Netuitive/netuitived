@@ -6,12 +6,16 @@ require 'netuitive/netuitived_config_manager'
 require 'netuitive/netuitived_logger'
 
 class MetricAggregator
-  def initialize
+  attr_reader :samples
+  attr_reader :metrics
+  attr_reader :aggregatedSamples
+
+  def initialize(apiEmissary)
     @metrics = []
     @samples = []
     @aggregatedSamples = {}
     @metricMutex = Mutex.new
-    @apiEmissary = APIEmissary.new
+    @apiEmissary = apiEmissary
   end
 
   def sendMetrics
