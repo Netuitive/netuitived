@@ -1,57 +1,16 @@
 #!/usr/bin/env ruby
+require 'drb/drb'
+require 'netuitived'
 require 'yaml'
-gem_root= File.expand_path("../..", __FILE__)
-data=YAML.load_file "#{gem_root}/config/agent.yml"
-if ARGV[0] == "start"
-	written = false
-	elementName=ENV["NETUITIVED_ELEMENT_NAME"]
-	if(elementName == nil or elementName == "")
-		elementName = data["elementName"]
-		if(elementName == "elementName" or elementName == "")
-			puts "please enter an element name: "
-			elementName = STDIN.gets.chomp
-			data["elementName"] = elementName
-			written = true
-		end
-	end
-	apiId=ENV["NETUITIVED_API_ID"]
-	if(apiId == nil or apiId == "")
-		apiId = data["apiId"]
-		if(apiId == "apiId" or apiId == "")
-			puts "please enter an api key: "
-			apiId = STDIN.gets.chomp
-			data["apiId"] = apiId
-			written = true
-		end
-	end
-	if written
-		File.open("#{gem_root}/config/agent.yml", 'w') {|f| f.write data.to_yaml } 
-	end
-	require 'drb/drb'
-	netuitivedAddr=data["netuitivedAddr"]
-	netuitivedPort=data["netuitivedPort"]
-	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
-	DRb.start_service
-	begin
-		DRbObject.new_with_uri(SERVER_URI).stopServer
-		sleep(2)
-	rescue
-		
-	end
-    require 'netuitived'
-    puts "netuitived started"
-elsif ARGV[0] == "stop"
-	require 'drb/drb'
-	netuitivedAddr=data["netuitivedAddr"]
-	netuitivedPort=data["netuitivedPort"]
-	SERVER_URI="druby://#{netuitivedAddr}:#{netuitivedPort}"
-	DRb.start_service
-	begin
-		DRbObject.new_with_uri(SERVER_URI).stopServer
-		puts "netuitived stopped"
-	rescue
-		puts "netuitived isn't running"
-	end
+
+# Check command line arguments
+case ARGV[0]
+when 'run' # runs netuitived in the foreground
+  Netuitived.start(true)
+when 'start' # runs netuitived in the background
+  Netuitived.start
+when 'stop' # stops running netuitived
+  Netuitived.stop
 else
-    puts "invalid option. options are: start, stop"
+  puts 'invalid option. options are: run, start, stop'
 end
