@@ -1,9 +1,21 @@
-require 'netuitive/netuitived_config_manager'
-require 'netuitive/scheduler'
 require 'drb/drb'
-require 'netuitive/netuitived_server'
-require 'netuitive/metric_aggregator'
-require 'netuitive/event_handler'
+require 'net/http'
+require 'json'
+require 'yaml'
+require 'drb/drb'
+require 'logger'
+require 'netuitived/config_manager'
+require 'netuitived/netuitive_logger'
+require 'netuitived/ingest_event'
+require 'netuitived/ingest_tag'
+require 'netuitived/ingest_metric'
+require 'netuitived/ingest_sample'
+require 'netuitived/ingest_element'
+require 'netuitived/netuitived_server'
+require 'netuitived/api_emissary'
+require 'netuitived/metric_aggregator'
+require 'netuitived/event_handler'
+require 'netuitived/scheduler'
 
 ##
 # Provides facilities for running Netuitived
@@ -20,8 +32,8 @@ class Netuitived
     end
 
     def new_front_object
-      apiEmissary = APIEmissary.new
-      NetuitivedServer.new(MetricAggregator.new(apiEmissary), EventHandler.new(apiEmissary))
+      apiEmissary = NetuitiveD::APIEmissary.new
+      NetuitiveD::NetuitivedServer.new(NetuitiveD::MetricAggregator.new(apiEmissary), NetuitiveD::EventHandler.new(apiEmissary))
     end
 
     ##
@@ -70,7 +82,7 @@ class Netuitived
 
       # Create a proc to run netuitived
       runner = proc do
-        Scheduler.startSchedule
+        NetuitiveD::Scheduler.startSchedule
         DRb.start_service(server_uri, front_object)
         DRb.thread.join
       end
@@ -107,13 +119,13 @@ class Netuitived
     # Loads the configuration if necessary
     def load_config
       unless @config_manager_setup
-        ConfigManager.load_config
-        NetuitiveLogger.setup
-        ConfigManager.read_config
+        NetuitiveD::ConfigManager.load_config
+        NetuitiveD::NetuitiveLogger.setup
+        NetuitiveD::ConfigManager.read_config
       end
 
       @config_manager_setup = true
-      @server_uri ||= "druby://#{ConfigManager.netuitivedAddr}:#{ConfigManager.netuitivedPort}".freeze
+      @server_uri ||= "druby://#{NetuitiveD::ConfigManager.netuitivedAddr}:#{NetuitiveD::ConfigManager.netuitivedPort}".freeze
     end
   end
 end
