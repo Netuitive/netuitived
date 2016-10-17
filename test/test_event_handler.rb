@@ -13,7 +13,7 @@ class EventHandlerTest < Test::Unit::TestCase
   end
 
   def test_handle_event
-    @api_emissary.expects(:sendEvents).once.with('[{"source":"test source","timestamp":946706461000,"title":"test title","type":"test type","tags":[{"name":"test name","value":"test value"}],"data":{"elementId":null,"level":"info","message":"test_message"}}]')
+    @api_emissary.expects(:sendEvents).once.with(regexp_matches(Regexp.new(Regexp.quote('[{"source":"test source","timestamp":') + '[0-9]+' + Regexp.quote(',"title":"test title","type":"test type","tags":[{"name":"test name","value":"test value"}],"data":{"elementId":null,"level":"info","message":"test_message"}}]'))))
     @event_handler.handleEvent('test_message', Time.new(2000, 1, 1, 1, 1, 1), 'test title', 'info', 'test source', 'test type', [IngestTag.new('test name', 'test value')])
   end
 
