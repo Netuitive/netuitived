@@ -14,7 +14,7 @@ Installing and Running NetuitiveD
 
 ### Run
 
-1. Run the start script (make sure the user using the command has access rights to the 
+1. Run the start script (make sure the user using the command has access rights to the
 gem's install directory):
 
 	   netuitived start
@@ -25,7 +25,18 @@ gem's install directory):
         my_app_name
         please enter an api key:
         DEMOab681D46bf5616dba8337c85DEMO
-        
+
     If you're unsure about what element name you should use, just use the name of your Ruby application.
 
->**Note:** The extra config information is found in config/agent.yml. Each field in the config file can also be set using environment variables. 
+>**Note:** The extra config information is found in config/agent.yml. Each field in the config file can also be set using environment variables.
+
+### Test
+
+To run the tests and code syntax validation run the following commands:
+
+```
+gem install bundle
+bundle install
+bundle exec rubocop
+bundle exec rake test
+```
