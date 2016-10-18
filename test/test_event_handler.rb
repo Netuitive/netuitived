@@ -30,7 +30,7 @@ module NetuitiveD
       begin
         raise 'test exception'
       rescue => e
-        @event_handler.handleExceptionEvent(e, e.class, test_name: 'test_value')
+        @event_handler.handleExceptionEvent({ message: e.message, backtrace: e.backtrace.join("\n\t") }, e.class, test_name: 'test_value')
       end
     end
   end

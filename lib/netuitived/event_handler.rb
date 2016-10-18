@@ -12,10 +12,13 @@ module NetuitiveD
       events = [event]
       eventString = events.to_json
       @apiEmissary.sendEvents(eventString)
+    rescue => e
+      NetuitiveD::NetuitiveLogger.log.error "error in handling event: #{e.message}, backtrace: #{e.backtrace}"
     end
 
     def handleExceptionEvent(exception, klass, tags = {})
-      message = "Exception Message: #{exception.message}\n"
+      message = "Exception Message: #{exception[:message]}\n" if (defined? exception[:message]) && !exception[:message].nil?
+      message ||= ''
       timestamp = Time.new
       title = 'Ruby Exception'
       level = 'Warning'
@@ -24,12 +27,14 @@ module NetuitiveD
       ingest_tags = []
       tags [:Exception] = klass unless klass.nil?
       tags.each do |key, value|
-        next if value.nil? || value == ''
+        next if !(defined? value) || value.nil? || value == ''
         ingest_tags << NetuitiveD::IngestTag.new(key, value)
         message += "#{key}: #{value}\n"
       end
-      message += "Backtrace:\n\t#{exception.backtrace.join("\n\t")}"
+      message += "Backtrace:\n\t#{exception[:backtrace]}" if (defined? exception[:backtrace]) && !exception[:backtrace].nil?
       handleEvent(message, timestamp, title, level, source, type, ingest_tags)
+    rescue => e
+      NetuitiveD::NetuitiveLogger.log.error "error in exception event: #{e.message}, backtrace: #{e.backtrace}"
     end
   end
 end
