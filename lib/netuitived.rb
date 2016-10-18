@@ -86,11 +86,11 @@ class Netuitived
         NetuitiveD::Scheduler.startSchedule
         NetuitiveD::NetuitiveLogger.log.debug 'starting drb service'
         begin
-        DRb.start_service(server_uri, front_object)
-        DRb.thread.join
-      rescue => e
-        NetuitiveD::NetuitiveLogger.log.error "drb error: #{e.message} backtrace: #{e.backtrace}"
-      end
+          DRb.start_service(server_uri, front_object)
+          DRb.thread.join
+        rescue => e
+          NetuitiveD::NetuitiveLogger.log.error "drb error: #{e.message} backtrace: #{e.backtrace}"
+        end
       end
 
       if foreground

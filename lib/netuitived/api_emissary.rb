@@ -17,7 +17,6 @@ module NetuitiveD
       req = Net::HTTP::Post.new(uri.to_s, 'Content-Type' => 'application/json')
       req.body = body
       NetuitiveD::NetuitiveLogger.log.debug 'starting post'
-      begin
       port = if NetuitiveD::ConfigManager.port =~ /(.*)nil(.*)/
                nil
              else
@@ -47,7 +46,6 @@ module NetuitiveD
       NetuitiveD::NetuitiveLogger.log.error 'error with http post: '
       NetuitiveD::NetuitiveLogger.log.error exception.message
       NetuitiveD::NetuitiveLogger.log.error exception.backtrace
-    end
     end
   end
 end
