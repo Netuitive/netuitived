@@ -32,7 +32,7 @@ module NetuitiveD
         http.request req
       end
       NetuitiveD::NetuitiveLogger.log.debug 'post finished'
-      if response.code != 202 || response.code != 200
+      if response.code.to_s != '202' && response.code.to_s != '200'
         NetuitiveD::NetuitiveLogger.log.error "Response from submitting netuitive metrics to api
         code: #{response.code}
         message: #{response.message}
