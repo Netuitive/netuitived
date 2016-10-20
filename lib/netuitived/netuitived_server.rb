@@ -13,6 +13,30 @@ module NetuitiveD
       @metricAggregator.addSample(metricId, val)
     end
 
+    def add_samples(samples)
+      @metricAggregator.add_samples(samples)
+    end
+
+    def add_counter_samples(samples)
+      @metricAggregator.add_counter_samples(samples)
+    end
+
+    def add_aggregate_metrics(samples)
+      @metricAggregator.add_aggregate_metrics(samples)
+    end
+
+    def add_aggregate_counter_metrics(samples)
+      @metricAggregator.add_aggregate_counter_metrics(samples)
+    end
+
+    def add_events(events)
+      @eventHandler.handle_events(events)
+    end
+
+    def add_exception_events(events)
+      @eventHandler.handle_exception_events(events)
+    end
+
     def addCounterSample(metricId, val)
       @metricAggregator.addCounterSample(metricId, val)
     end
