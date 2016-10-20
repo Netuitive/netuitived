@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'mocha/test_unit'
 require 'json'
+require 'netuitived/error_logger'
 require 'netuitived/event_handler'
 require 'netuitived/netuitive_logger'
 require 'netuitived/api_emissary'
