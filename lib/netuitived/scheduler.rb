@@ -6,9 +6,11 @@ module NetuitiveD
           NetuitiveD::NetuitiveLogger.log.debug "scheduler sleeping for: #{NetuitiveD::ConfigManager.interval}"
           sleep(NetuitiveD::ConfigManager.interval)
           Thread.new do
-            NetuitiveD::NetuitiveLogger.log.debug 'scheduler sending metrics'
-            Netuitived.front_object.sendMetrics
-            NetuitiveD::NetuitiveLogger.log.debug 'scheduler sent metrics'
+            NetuitiveD::ErrorLogger.guard('exception during schedule') do
+              NetuitiveD::NetuitiveLogger.log.debug 'scheduler sending metrics'
+              Netuitived.front_object.sendMetrics
+              NetuitiveD::NetuitiveLogger.log.debug 'scheduler sent metrics'
+            end
           end
         end
       end
