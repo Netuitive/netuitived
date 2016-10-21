@@ -1,4 +1,4 @@
-netuitived 1.1.0 (2016-10-20)
+netuitived 1.1.0 (2016-10-21)
 -------------------------
 * adding server endpoints to batch metric/event additions
 * error proofing
