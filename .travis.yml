@@ -7,3 +7,5 @@ install:
 script:
   - rubocop
   - rake test
+notifications:
+  slack: netuitive:ZnQK4zdxmtXMsrquZrQrqtfe
