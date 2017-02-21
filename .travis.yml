@@ -4,5 +4,13 @@ rvm:
 script:
   - bundle exec rubocop
   - bundle exec rake test
+deploy:
+  provider: rubygems
+  api_key:
+    secure: kcbH4ICOGE3FLSRI/Ub6/W0/aJoCXF85d8DwyZ/8fvaa2sbMvD7YFmBP+A/sqJMPjBrETuqYwsPZ1RImvGbxVri55uUyhJNrkzu4X3Wmci+cAZnnwaB9ha89E0rCmFn4+9HLP+xPZXL+4PaWXfDmyEML7A0V6VJddrGrIpMcfsnQDH9DxMoI5wGKGUaltLLprFD7eX/z0QZTp1VSxONiV4zGnVvI5ubw5BxVDgwgbyeOX2r6SV5yjj90QDxP82SadYoY/mARztKpNy9QMSKhHXvODs2j9G7vA7AOHL+zbQWmk1QJv0REQq9BhAOPfrXbWFryK8OtcbCh28peaoy43Y4HaZW73jR+mCuOF7pxAJirjEKyLUJhSQSbPVRviXhTasEh4uG4fUcPEKmaqQbKgccY3qDKxRIHduM0iIeoJRripIUk9NDuKJX77fJIqEHn76SiIUm7Ey96lwCsY8EdwXsB/Wk/jSsvfIII9zmz09ixoA+3kDkOsXpu3vXHzmqx5N0EFKEPW85+kI5vogLmc/wUa/HC/D1lttJ9bxbzuybNDmoH2alz0jkMym7Elku+3smgi/FGDONcOLMjyvlT6O3SwHa2QApf/nUavskgtsNyp5CnNNaUgPaxjxq0+TNKnpn1qAzdMNIL4oE3EO5rgxV3pOylmeWF0OTFsukUbSk=
+  gem: netuitived
+  on:
+    tags: true
+    repo: Netuitive/netuitived
 notifications:
   slack: netuitive:ZnQK4zdxmtXMsrquZrQrqtfe
