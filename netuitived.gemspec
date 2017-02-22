@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files       = files
   s.homepage    =
     'http://rubygems.org/gems/netuitived'
-  s.license = 'Apache v2.0'
+  s.license = 'Apache-2.0'
   s.required_ruby_version = '>= 1.9.0'
   s.executables << 'netuitived'
 end
