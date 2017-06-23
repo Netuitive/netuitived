@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'netuitived'
-  s.version     = '1.1.0'
-  s.date        = '2016-10-21'
+  s.version     = '1.1.1'
+  s.date        = '2017-06-23'
   s.summary     = 'Metric collection druby server'
   s.description = 'Collects metrics over a certain interval and then sends them to Netuitive'
   s.authors     = ['John King']
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files       = files
   s.homepage    =
     'http://rubygems.org/gems/netuitived'
-  s.license = 'Apache v2.0'
+  s.license = 'Apache-2.0'
   s.required_ruby_version = '>= 1.9.0'
   s.executables << 'netuitived'
 end
