@@ -7,6 +7,7 @@ module NetuitiveD
     def initialize(apiEmissary)
       @metrics = []
       @samples = []
+      @tags = []
       @aggregatedSamples = {}
       @metricMutex = Mutex.new
       @apiEmissary = apiEmissary
@@ -53,7 +54,10 @@ module NetuitiveD
           aggregatedSamplesArray.each do |sample|
             sample.timestamp = Time.new
           end
-          element = NetuitiveD::IngestElement.new(NetuitiveD::ConfigManager.elementName, NetuitiveD::ConfigManager.elementName, 'Ruby', nil, @metrics, @samples + aggregatedSamplesArray, nil, nil)
+          for str in NetuitiveD::ConfigManager.elementTags.split(',') do
+            @tags.push(NetuitiveD::IngestTag.new(str.split(':')[0], str.split(':')[1]))
+          end
+          element = NetuitiveD::IngestElement.new(NetuitiveD::ConfigManager.elementName, NetuitiveD::ConfigManager.elementName, 'Ruby', nil, @metrics, @samples + aggregatedSamplesArray, @tags, nil)
           elements = [element]
           elementString = elements.to_json
           clearMetrics
