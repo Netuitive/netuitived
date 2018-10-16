@@ -6,6 +6,7 @@ apiId: apiId #apiId for the datasources. found in the datasources section in the
 baseAddr: "api.app.netuitive.com" #where to send the data. in most cases use the default. environment variable: NETUITIVED_BASE_ADDR
 port: nil #in most cases this will be nil. environment variable: NETUITIVED_PORT
 elementName: elementName #name of the element to assign metrics to in netuitive. if unsure, just use the name of your app. environment variable: NETUITIVED_ELEMENT_NAME
+#elementTags: name1:value1,name2:value2 #tags applied to element. environment variable: NETUITIVED_ELEMENT_TAGS
 debugLevel: error #options (in ascending order of debugness) are: error, info, debug. environment variable: NETUITIVED_DEBUG_LEVEL
 netuitivedAddr: "localhost" #environment variable: NETUITIVED_NETUITIVED_ADDR
 netuitivedPort: 8875 #environment variable: NETUITIVED_NETUITIVED_PORT
