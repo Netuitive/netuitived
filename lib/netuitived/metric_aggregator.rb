@@ -55,7 +55,7 @@ module NetuitiveD
             sample.timestamp = Time.new
           end
 	        unless NetuitiveD::ConfigManager.elementTags.nil?
-            for tag in NetuitiveD::ConfigManager.elementTags.split(',') do
+            for tag in NetuitiveD::ConfigManager.elementTags.split(',').map(&:strip) do
               @tags.push(NetuitiveD::IngestTag.new(tag.split(':')[0], tag.split(':')[1]))
             end
 	        end
