@@ -55,7 +55,7 @@ module NetuitiveD
           end
           unless NetuitiveD::ConfigManager.elementTags.nil?
             @tags = []
-            for tag in NetuitiveD::ConfigManager.elementTags.split(',').map(&:strip) do
+            NetuitiveD::ConfigManager.elementTags.split(',').map(&:strip).each do |tag|
               @tags.push(NetuitiveD::IngestTag.new(tag.split(':')[0], tag.split(':')[1]))
             end
           end
