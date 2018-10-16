@@ -53,12 +53,12 @@ module NetuitiveD
           aggregatedSamplesArray.each do |sample|
             sample.timestamp = Time.new
           end
-	        unless NetuitiveD::ConfigManager.elementTags.nil?
+          unless NetuitiveD::ConfigManager.elementTags.nil?
             @tags = []
             for tag in NetuitiveD::ConfigManager.elementTags.split(',').map(&:strip) do
               @tags.push(NetuitiveD::IngestTag.new(tag.split(':')[0], tag.split(':')[1]))
             end
-	        end
+          end
           element = NetuitiveD::IngestElement.new(NetuitiveD::ConfigManager.elementName, NetuitiveD::ConfigManager.elementName, 'Ruby', nil, @metrics, @samples + aggregatedSamplesArray, @tags, nil)
           elements = [element]
           elementString = elements.to_json
