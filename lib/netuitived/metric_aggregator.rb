@@ -54,8 +54,8 @@ module NetuitiveD
           aggregatedSamplesArray.each do |sample|
             sample.timestamp = Time.new
           end
-          for str in NetuitiveD::ConfigManager.elementTags.split(',') do
-            @tags.push(NetuitiveD::IngestTag.new(str.split(':')[0], str.split(':')[1]))
+          for tag in NetuitiveD::ConfigManager.elementTags.split(',') do
+            @tags.push(NetuitiveD::IngestTag.new(tag.split(':')[0], tag.split(':')[1]))
           end
           element = NetuitiveD::IngestElement.new(NetuitiveD::ConfigManager.elementName, NetuitiveD::ConfigManager.elementName, 'Ruby', nil, @metrics, @samples + aggregatedSamplesArray, @tags, nil)
           elements = [element]
