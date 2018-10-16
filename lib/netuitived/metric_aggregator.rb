@@ -7,7 +7,6 @@ module NetuitiveD
     def initialize(apiEmissary)
       @metrics = []
       @samples = []
-      @tags = []
       @aggregatedSamples = {}
       @metricMutex = Mutex.new
       @apiEmissary = apiEmissary
@@ -55,6 +54,7 @@ module NetuitiveD
             sample.timestamp = Time.new
           end
 	        unless NetuitiveD::ConfigManager.elementTags.nil?
+            @tags = []
             for tag in NetuitiveD::ConfigManager.elementTags.split(',').map(&:strip) do
               @tags.push(NetuitiveD::IngestTag.new(tag.split(':')[0], tag.split(':')[1]))
             end
