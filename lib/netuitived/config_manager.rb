@@ -9,6 +9,8 @@ module NetuitiveD
 
       attr_reader :elementName
 
+      attr_reader :elementTags
+
       attr_reader :netuitivedAddr
 
       attr_reader :netuitivedPort
@@ -66,6 +68,7 @@ module NetuitiveD
         @baseAddr = property('baseAddr', 'NETUITIVED_BASE_ADDR')
         @port = property('port', 'NETUITIVED_PORT')
         @elementName = property('elementName', 'NETUITIVED_ELEMENT_NAME')
+        @elementTags = property('elementTags', 'NETUITIVED_ELEMENT_TAGS')
         @netuitivedAddr = property('netuitivedAddr', 'NETUITIVED_NETUITIVED_ADDR')
         @netuitivedPort = property('netuitivedPort', 'NETUITIVED_NETUITIVED_PORT')
         @interval = property('interval', 'NETUITIVED_INTERVAL')
@@ -84,6 +87,7 @@ module NetuitiveD
           baseAddr: #{baseAddr}
           port: #{port}
           elementName: #{elementName}
+          elementTags: #{elementTags}
           debugLevel: #{debugLevelString}"
       end
     end
