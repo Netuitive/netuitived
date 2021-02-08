@@ -3,7 +3,7 @@ NetuitiveD
 
 NetuitiveD is a dRuby application submits and aggregates metrics through the use of DRbObjects. NetuitiveD is meant to work in conjunction with the [netuitive_ruby_api](https://rubygems.org/gems/netuitive_ruby_api) and [netuitive_rails_agent](https://rubygems.org/gems/netuitive_rails_agent) gems to help [Netuitive](https://www.netuitive.com) monitor your Ruby applications.
 
-For more information on NetuitiveD, see our Ruby agent [help docs](https://help.netuitive.com/Content/Misc/Datasources/new_ruby_datasource.htm), or contact Netuitive support at [support@netuitive.com](mailto:support@netuitive.com).
+For more information on NetuitiveD, see our Ruby agent [help docs](https://docs.virtana.com/en/ruby-agent.html), or contact Netuitive support at [support@netuitive.com](mailto:support@netuitive.com).
 
 Installing and Running NetuitiveD
 ---------------------------------
